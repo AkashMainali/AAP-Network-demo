@@ -1,0 +1,26 @@
+---
+- hosts: localhost
+  gather_facts: false
+  collections:
+    - citrix.adc
+  vars:
+    nsip: 192.168.2.217
+    service_member1_ip: 192.168.2.233
+    service_member2_ip: 192.168.2.234
+
+  tasks:
+ - name: Setup http service group
+   netscaler_servicegroup:
+     nsip: “{{ nsip }}”
+     nitro_user: “{{ nitro_user }}”
+     nitro_pass: “{{ nitro_pass }}”
+     servicegroupname: service-group-http
+     servicetype: HTTP
+     maxclient: 4000
+     servicemembers:
+       - ip: "{{ service_member1_ip }}"
+         port: 80
+         weight: 50
+       - ip: "{{ service_member2_ip }}"
+         port: 80
+         weight: 50
