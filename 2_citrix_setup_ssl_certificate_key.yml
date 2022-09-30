@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: localhost
   gather_facts: false
   collections:
     - citrix.adc
@@ -9,11 +9,16 @@
     service_member2_ip: 192.168.2.234
 
   tasks:
-    - name: Setup ssl certificate key
-      netscaler_ssl_certkey:
+    - name: Setup ssl certkey
+      citrix_adc_ssl_certkey:
         nsip: “{{ nsip }}”
         nitro_user: “{{ nitro_user }}”
         nitro_pass: “{{ nitro_pass }}”
-        certkey: certificate_http
-        cert: server.crt
-        key: server.key
+        certkey: ansible_created_certirificate
+        cert: ansible_created_server.crt
+        key: ansible_created_server.key
+        expirymonitor: enabled
+        notificationperiod: 30
+        inform: PEM
+        password: False
+        passplain: ansible

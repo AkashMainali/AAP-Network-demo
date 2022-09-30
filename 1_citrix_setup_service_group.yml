@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: localhost
   gather_facts: false
   collections:
     - citrix.adc
@@ -9,7 +9,7 @@
     service_member2_ip: 192.168.2.234
 
   tasks:
-      - name: Set service 1
+      - name: Set http service 1
         citrix.adc.citrix_adc_service:
           nsip: "{{ nsip }}"
           nitro_user: "{{ nitro_user }}"
@@ -21,7 +21,7 @@
           ipaddress: "{{ service_member1_ip }}"
           port: 80
 
-    - name: Set service 2
+    - name: Set http service 2
       citrix.adc.citrix_adc_service:
         nsip: "{{ nsip }}"
         nitro_user: "{{ nitro_user }}"

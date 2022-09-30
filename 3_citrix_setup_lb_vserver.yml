@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: localhost
   gather_facts: false
   collections:
     - citrix.adc
@@ -10,8 +10,7 @@
 
   tasks:
   - name: Create a load balancing vserver bound to services
-    delegate_to: localhost
-    citrix_adc_lb_vserver:
+    citrix.adc.citrix_adc_lb_vserver:
       nsip: “{{ nsip }}”
       nitro_user: “{{ nitro_user }}”
       nitro_pass: “{{ nitro_pass }}”
