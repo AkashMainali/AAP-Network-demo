@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: all
   gather_facts: false
   collections:
     - citrix.adc
@@ -9,18 +9,45 @@
     service_member2_ip: 192.168.2.234
 
   tasks:
+      - name: Set service 1
+        citrix.adc.citrix_adc_service:
+          nsip: "{{ nsip }}"
+          nitro_user: "{{ nitro_user }}"
+          nitro_pass: "{{ nitro_pass }}"
+          validate_certs: "{{ validate_certs }}"
+          state: present
+          name: service-http-1
+          servicetype: HTTP
+          ipaddress: "{{ service_member1_ip }}"
+          port: 80
+
+    - name: Set service 2
+      citrix.adc.citrix_adc_service:
+        nsip: "{{ nsip }}"
+        nitro_user: "{{ nitro_user }}"
+        nitro_pass: "{{ nitro_pass }}"
+        validate_certs: "{{ validate_certs }}"
+        state: present
+        name: service-http-2
+        servicetype: HTTP
+        ipaddress: "{{ service_member2_ip }}"
+        port: 80
+
   - name: Setup http service group
-    netscaler_servicegroup:
+    citrix.adc.citrix_adc_servicegroup:
       nsip: “{{ nsip }}”
       nitro_user: “{{ nitro_user }}”
       nitro_pass: “{{ nitro_pass }}”
-      servicegroupname: service-group-http
+      validate_certs: no
+      state: present
+      servicegroupname: ansible-created-service-group
       servicetype: HTTP
-      maxclient: 4000
+      maxclient: "4000"
+      autoscale: API
       servicemembers:
-        - ip: "{{ service_member1_ip }}"
-          port: 80
-          weight: 50
-        - ip: "{{ service_member2_ip }}"
-          port: 80
-          weight: 50
+        mode: dsapi
+        attributes:
+          - ip: "{{ service_member1_ip }}"
+            port: 80
+          - ip: "{{ service_member2_ip }}"
+            port: 80
