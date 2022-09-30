@@ -16,7 +16,7 @@
           nitro_pass: "{{ nitro_pass }}"
           validate_certs: "{{ validate_certs }}"
           state: present
-          name: service-http-1
+          name: ansible-crated-service-http-1
           servicetype: HTTP
           ipaddress: "{{ service_member1_ip }}"
           port: 80
@@ -28,7 +28,7 @@
         nitro_pass: "{{ nitro_pass }}"
         validate_certs: "{{ validate_certs }}"
         state: present
-        name: service-http-2
+        name: ansible-created-service-http-2
         servicetype: HTTP
         ipaddress: "{{ service_member2_ip }}"
         port: 80

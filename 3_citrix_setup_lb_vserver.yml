@@ -9,15 +9,21 @@
     service_member2_ip: 192.168.2.234
 
   tasks:
-    - name: Setup lb vserver
-      netscaler_lb_vserver:
-        nsip: “{{ nsip }}”
-        nitro_user: “{{ nitro_user }}”
-        nitro_pass: “{{ nitro_pass }}”
-        name: lb-vserver-http
-        servicetype: SSL
-        ipv46: 10.78.0.1
-        port: 443
-        ssl_certkey: certificate_http
-        servicegroupbindings:
-        - servicegroupname: service-group-http
+  - name: Create a load balancing vserver bound to services
+    delegate_to: localhost
+    citrix_adc_lb_vserver:
+      nsip: “{{ nsip }}”
+      nitro_user: “{{ nitro_user }}”
+      nitro_pass: “{{ nitro_pass }}”
+      validate_certs: no
+      state: present
+      name: ansible_crated_lb_vserver
+      servicetype: HTTP
+      timeout: 12
+      ipv46: 6.93.3.3
+      port: 80
+      servicebindings:
+          - servicename: ansible-created-service-http-1
+            weight: 80
+          - servicename: ansible-created-service-http-2
+            weight: 20
