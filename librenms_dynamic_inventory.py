@@ -4,7 +4,7 @@ import json
 import sys
 
 # LibreNMS API settings
-LIBRENMS_API_URL = "https://ny5-pr-netlibre-01.prod.schonfeld.com/api/v0"
+LIBRENMS_API_URL = "https://ny5-pr-netlibre-01.prod.schonfeld.com/api/v0/"
 LIBRENMS_API_TOKEN = "019efefd4c7290aaf1b48c7d7f5c4a10"
 
 # Ansible dynamic inventory dictionary
@@ -15,6 +15,7 @@ def get_librenms_devices():
         headers = {"Authorization": f"Bearer {LIBRENMS_API_TOKEN}"}
         response = requests.get(f"{LIBRENMS_API_URL}devices", headers=headers)
         response.raise_for_status()  # Raise an error for bad responses (4xx, 5xx)
+        print response.json()
         devices = response.json()
         return devices
     except requests.exceptions.RequestException as e:
