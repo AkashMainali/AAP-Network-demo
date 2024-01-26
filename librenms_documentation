@@ -14,12 +14,13 @@ import sys
 LIBRENMS_API_URL = "https://your-librenms-instance/api/v0/"
 LIBRENMS_API_TOKEN = "your-api-token"
 #LibreNMS API Settings:
-#These are variables that store the URL and API token needed to connect to the LibreNMS API. You should replace the placeholders with the actual URL and token for your LibreNMS instance.
+#These are variables that store the URL and API token needed to connect to the LibreNMS API.
 
 # Ansible dynamic inventory dictionary
 ansible_inventory = {"all": {"hosts": [], "vars": {}}, "_meta": {"hostvars": {}}}
 #Ansible Dynamic Inventory Dictionary:
-#This is the main data structure that will store the dynamic inventory information. It's initialized with a basic structure containing an "all" group and some additional metadata.
+#This is the main data structure that will store the dynamic inventory information. 
+#It's initialized with a basic structure containing an "all" group and some additional metadata.
 
 def get_librenms_devices():
     try:
@@ -51,7 +52,6 @@ def populate_ansible_inventory(devices):
 
         # Add the host to the 'all' group
         ansible_inventory["all"]["hosts"].append(hostname)
-
         # Populate hostvars with additional information (if needed)
         ansible_inventory["_meta"]["hostvars"][hostname] = {
             "ansible_host": ip_address,
@@ -65,15 +65,14 @@ def populate_ansible_inventory(devices):
 #Adding Hosts to 'all' Group and Populating Host Variables:
 #For each device, the script adds the host to the 'all' group in the Ansible dynamic inventory.
 #Host-specific variables, including ansible_host and other attributes, are stored in the _meta section of the inventory under hostvars.
-
         # Add the host to specific groups based on device attributes
         for group in device_groups:
             if group not in ansible_inventory:
                 ansible_inventory[group] = {"hosts": []}
             ansible_inventory[group]["hosts"].append(hostname)
+
 #Adding Hosts to Specific Groups:
 #For each device, the script adds the host to specific groups based on the device_groups attribute.
-
         # Add the host to region-based groups
         if region not in ansible_inventory:
             ansible_inventory[region] = {"hosts": []}
