@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#Script uses requests library, if not installed we can use pip install requests
 import requests
 import json
 import sys
