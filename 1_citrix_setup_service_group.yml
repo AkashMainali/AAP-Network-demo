@@ -21,33 +21,33 @@
           ipaddress: "{{ service_member1_ip }}"
           port: 80
 
-    - name: Set http service 2
-      citrix.adc.citrix_adc_service:
-        nsip: "{{ nsip }}"
-        nitro_user: "{{ nitro_user }}"
-        nitro_pass: "{{ nitro_pass }}"
-        validate_certs: "{{ validate_certs }}"
-        state: present
-        name: ansible-created-service-http-2
-        servicetype: HTTP
-        ipaddress: "{{ service_member2_ip }}"
-        port: 80
+      - name: Set http service 2
+        citrix.adc.citrix_adc_service:
+          nsip: "{{ nsip }}"
+          nitro_user: "{{ nitro_user }}"
+          nitro_pass: "{{ nitro_pass }}"
+          validate_certs: "{{ validate_certs }}"
+          state: present
+          name: ansible-created-service-http-2
+          servicetype: HTTP
+          ipaddress: "{{ service_member2_ip }}"
+          port: 80
 
-    - name: Setup http service group
-      citrix.adc.citrix_adc_servicegroup:
-        nsip: “{{ nsip }}”
-        nitro_user: “{{ nitro_user }}”
-        nitro_pass: “{{ nitro_pass }}”
-        validate_certs: no
-        state: present
-        servicegroupname: ansible-created-service-group
-        servicetype: HTTP
-        maxclient: "4000"
-        autoscale: API
-        servicemembers:
-          mode: dsapi
-          attributes:
-            - ip: "{{ service_member1_ip }}"
-              port: 80
-            - ip: "{{ service_member2_ip }}"
-              port: 80
+      - name: Setup http service group
+        citrix.adc.citrix_adc_servicegroup:
+          nsip: “{{ nsip }}”
+          nitro_user: “{{ nitro_user }}”
+          nitro_pass: “{{ nitro_pass }}”
+          validate_certs: no
+          state: present
+          servicegroupname: ansible-created-service-group
+          servicetype: HTTP
+          maxclient: "4000"
+          autoscale: API
+          servicemembers:
+            mode: dsapi
+            attributes:
+              - ip: "{{ service_member1_ip }}"
+                port: 80
+              - ip: "{{ service_member2_ip }}"
+                port: 80
